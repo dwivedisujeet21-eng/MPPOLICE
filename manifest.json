@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "MPESB Police-SI 2026 Prep",
+  "short_name": "MPESB Prep",
+  "description": "MP Police Constable aur Subedar/SI 2026 ki taiyari ke liye practice, mock test aur factline notes wala offline prep app.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0A1628",
+  "theme_color": "#0A1628",
+  "categories": ["education", "productivity"],
+  "lang": "hi-IN",
+  "dir": "ltr",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
