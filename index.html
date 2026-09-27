@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MPESB Police/SI 2026 Smart Prep</title>
+<meta name="theme-color" content="#0A1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MPESB Prep">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230A1628'/%3E%3Ctext x='50' y='66' font-size='55' text-anchor='middle' fill='%23D4A72C'%3E%E0%A4%AA%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230A1628'/%3E%3Ctext x='50' y='66' font-size='55' text-anchor='middle' fill='%23D4A72C'%3E%E0%A4%AA%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href='data:application/manifest+json,{"id":"/","name":"MPESB Police-SI 2026 Prep","short_name":"MPESB Prep","description":"MP Police Constable %26 Subedar%2FSI 2026 ki taiyari ke liye practice, mock test aur factline notes wala offline prep app.","start_url":"./","scope":"./","display":"standalone","background_color":"%230A1628","theme_color":"%230A1628","orientation":"portrait","categories":["education","productivity"],"icons":[{"src":"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'%230A1628\'/%3E%3Ctext x=\'50\' y=\'66\' font-size=\'55\' text-anchor=\'middle\' fill=\'%23D4A72C\'%3E%E0%A4%AA%3C/text%3E%3C/svg%3E","sizes":"192x192 512x512","type":"image/svg+xml","purpose":"any maskable"}]}'>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').catch(function(e){ console.log('SW register failed (chalega file:// पर भी ऐप बिना SW के काम करेगी):', e); });
+  });
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-950:#08111F; --navy-900:#0A1628; --navy-800:#13294B; --navy-700:#1B3A63;
+  --gold-500:#D4A72C; --gold-300:#EBCB6B; --saffron-500:#FF7722;
+  --cream-100:#F5EFE0; --cream-200:#E8E0C8;
+  --green-600:#1B7A43; --green-300:#7FD99A; --red-600:#C0392B; --red-300:#F5A79A;
+  --muted:#8FA0BE;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);}
+body{
+  height:100%;margin:0;
+  background:radial-gradient(1200px 600px at 100% -10%, rgba(212,167,44,.10), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(255,119,34,.08), transparent 60%), var(--navy-900);
+  color:var(--cream-100); font-family:'Noto Sans Devanagari','Poppins',sans-serif; -webkit-tap-highlight-color:transparent;
+}
+.app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative;}
+header.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:calc(14px + env(safe-area-inset-top,0px)) 18px 14px;
+  background:linear-gradient(180deg,var(--navy-800),rgba(19,41,75,.4));
+  border-bottom:1px solid rgba(212,167,44,.25); position:sticky;top:0;z-index:20;
+}
+.brand{display:flex;align-items:center;gap:10px;}
+.badge{width:38px;height:38px;border-radius:10px;background:conic-gradient(from 220deg,var(--gold-500),var(--saffron-500),var(--gold-500));
+  display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--navy-950);font-size:18px;font-family:'Poppins',sans-serif;}
+.brand h1{font-size:14px;margin:0;line-height:1.2;font-weight:700;}
+.brand span{display:block;font-size:10px;color:var(--gold-300);font-family:'Poppins',sans-serif;}
+.streak{display:flex;align-items:center;gap:5px;background:rgba(212,167,44,.12);border:1px solid rgba(212,167,44,.35);padding:6px 10px;border-radius:20px;font-size:12px;color:var(--gold-300);font-family:'Poppins',sans-serif;font-weight:600;}
+.trackpill{display:flex;align-items:center;gap:4px;background:rgba(255,119,34,.14);border:1px solid rgba(255,119,34,.4);padding:5px 10px;border-radius:20px;font-size:11px;color:var(--saffron-500);font-weight:700;cursor:pointer;}
+main{flex:1;padding:16px 16px 92px;overflow-x:hidden;}
+.screen{display:none;animation:fade .25s ease;}
+.screen.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+h2.title{font-size:19px;margin:2px 0 4px;font-weight:700;}
+p.sub{color:var(--muted);font-size:13px;margin:0 0 16px;}
+.card{background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.015));border:1px solid rgba(212,167,44,.16);border-radius:16px;padding:16px;margin-bottom:14px;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.stat{background:linear-gradient(160deg,var(--navy-800),var(--navy-900));border:1px solid rgba(212,167,44,.18);border-radius:14px;padding:14px;}
+.stat b{display:block;font-size:20px;color:var(--gold-300);font-family:'Poppins',sans-serif;}
+.stat span{font-size:11px;color:var(--muted);}
+.subject-row{display:flex;align-items:center;justify-content:space-between;background:var(--navy-800);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:13px 15px;cursor:pointer;margin-bottom:10px;}
+.subject-row .name{font-weight:600;font-size:14px;}
+.subject-row .meta{font-size:11px;color:var(--muted);margin-top:2px;}
+.chevron{color:var(--gold-500);font-size:18px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--gold-500),var(--saffron-500));color:var(--navy-950);font-weight:700;border:none;border-radius:12px;padding:13px 18px;font-size:14px;cursor:pointer;width:100%;font-family:inherit;}
+.btn.secondary{background:transparent;border:1.5px solid rgba(212,167,44,.5);color:var(--gold-300);}
+.btn.ghost{background:rgba(255,255,255,.06);color:var(--cream-100);}
+.row2{display:flex;gap:10px;} .row2 .btn{flex:1;}
+label.field-label{font-size:12px;color:var(--muted);display:block;margin:0 0 6px;}
+input[type=date],input[type=number],select{width:100%;background:var(--navy-800);border:1px solid rgba(255,255,255,.12);color:var(--cream-100);padding:11px 12px;border-radius:10px;font-size:14px;margin-bottom:12px;font-family:inherit;}
+.progress-bar{height:9px;border-radius:6px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:6px;}
+.progress-bar>div{height:100%;background:linear-gradient(90deg,var(--gold-500),var(--saffron-500));border-radius:6px;}
+.qcard{background:var(--navy-800);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;}
+.qtag{display:inline-block;font-size:10px;color:var(--gold-300);background:rgba(212,167,44,.12);padding:3px 9px;border-radius:20px;margin-bottom:8px;font-family:'Poppins',sans-serif;}
+.srctag{display:block;font-size:10.5px;color:var(--saffron-500);margin:-2px 0 10px;font-style:italic;}
+.qtext{font-size:15px;line-height:1.55;margin:0 0 16px;font-weight:600;}
+.opt{display:block;width:100%;text-align:right;background:rgba(255,255,255,.03);border:1.5px solid rgba(255,255,255,.1);color:var(--cream-100);padding:12px 14px;border-radius:11px;margin-bottom:9px;font-size:14px;cursor:pointer;font-family:inherit;}
+.opt.correct{border-color:var(--green-600);background:rgba(27,122,67,.22);color:var(--green-300);}
+.opt.wrong{border-color:var(--red-600);background:rgba(192,57,43,.2);color:var(--red-300);}
+.explain{font-size:12.5px;color:var(--muted);background:rgba(255,255,255,.04);padding:11px 13px;border-radius:10px;margin-top:10px;line-height:1.5;border-right:3px solid var(--gold-500);}
+.qnav{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:8px;}
+.qnav span{font-size:12px;color:var(--muted);}
+.timer{font-family:'Poppins',sans-serif;font-weight:700;font-size:15px;color:var(--saffron-500);}
+.mock-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.result-ring{width:140px;height:140px;border-radius:50%;margin:10px auto 6px;display:flex;align-items:center;justify-content:center;flex-direction:column;background:conic-gradient(var(--gold-500) calc(var(--pct,0)*1%), rgba(255,255,255,.08) 0);position:relative;}
+.result-ring::before{content:'';position:absolute;inset:9px;border-radius:50%;background:var(--navy-900);}
+.result-ring b{position:relative;font-size:24px;font-family:'Poppins',sans-serif;color:var(--gold-300);}
+.result-ring span{position:relative;font-size:10.5px;color:var(--muted);}
+.planner-day{background:var(--navy-800);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:12px 14px;margin-bottom:8px;display:flex;gap:11px;align-items:flex-start;}
+.planner-day.done{border-color:var(--green-600);}
+.planner-day input{margin-top:3px;accent-color:var(--gold-500);width:18px;height:18px;flex-shrink:0;}
+.planner-day .d-title{font-weight:600;font-size:13px;}
+.planner-day .d-sub{font-size:11.5px;color:var(--muted);margin-top:2px;}
+.tabs-nav{position:fixed;bottom:0;left:0;right:0;padding-bottom:env(safe-area-inset-bottom,0px);background:rgba(10,22,40,.94);backdrop-filter:blur(14px);border-top:1px solid rgba(212,167,44,.22);z-index:30;}
+.tabs-nav .inner{max-width:480px;margin:0 auto;display:flex;}
+.tab-btn{flex:1;background:none;border:none;color:var(--muted);padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;cursor:pointer;font-family:inherit;}
+.tab-btn .ic{font-size:18px;} .tab-btn.active{color:var(--gold-300);}
+.pill{display:inline-block;font-size:11px;background:rgba(255,119,34,.15);color:var(--saffron-500);padding:3px 9px;border-radius:20px;font-family:'Poppins',sans-serif;font-weight:600;}
+.empty{text-align:center;padding:30px 10px;color:var(--muted);font-size:13px;}
+::-webkit-scrollbar{display:none;}
+/* lock */
+.lock-overlay{position:fixed;inset:0;z-index:100;background:radial-gradient(900px 500px at 50% -10%, rgba(212,167,44,.14), transparent 60%), var(--navy-950);display:flex;align-items:center;justify-content:center;padding:24px;}
+.lock-card{max-width:340px;width:100%;text-align:center;}
+.lock-card h2{font-size:18px;margin:14px 0 6px;}
+.lock-card p{font-size:12.5px;color:var(--muted);margin:0 0 18px;line-height:1.6;}
+#accessInput{width:100%;text-align:center;letter-spacing:2px;font-weight:700;font-size:15px;background:var(--navy-800);border:1.5px solid rgba(212,167,44,.4);color:var(--cream-100);padding:12px;border-radius:12px;margin-bottom:10px;font-family:'Poppins',sans-serif;}
+.lock-error{color:var(--red-300);font-size:12px;min-height:18px;margin-bottom:6px;}
+/* notes / watermark */
+.watermark-layer{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden;opacity:.06;display:flex;flex-wrap:wrap;align-content:space-around;justify-content:space-around;transform:rotate(-26deg) scale(1.4);}
+.watermark-layer span{font-size:12px;font-weight:700;color:var(--gold-500);white-space:nowrap;margin:16px;font-family:'Poppins',sans-serif;}
+.notes-wrap{-webkit-user-select:none;user-select:none;}
+.notes-wrap h3{font-size:15px;color:var(--gold-300);margin:16px 0 8px;}
+.notes-wrap table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;}
+.notes-wrap table td{border:1px solid rgba(255,255,255,.1);padding:6px 8px;}
+.notes-wrap table td:first-child{color:var(--gold-300);font-weight:600;width:44%;}
+.notes-wrap ul{margin:0 0 10px;padding-right:0;padding-left:18px;font-size:12.5px;line-height:1.7;}
+.notes-wrap .qa{background:rgba(255,255,255,.03);border-right:3px solid var(--saffron-500);padding:8px 10px;border-radius:8px;margin-bottom:8px;font-size:12px;}
+.notes-wrap .qa .src{color:var(--saffron-500);font-size:10.5px;display:block;margin-top:4px;font-style:italic;}
+.track-toggle{display:flex;gap:8px;margin-bottom:14px;}
+.track-toggle button{flex:1;padding:12px;border-radius:12px;border:1.5px solid rgba(212,167,44,.3);background:var(--navy-800);color:var(--cream-100);font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;}
+.track-toggle button.active{background:linear-gradient(135deg,var(--gold-500),var(--saffron-500));color:var(--navy-950);border-color:transparent;}
+.pft-result{text-align:center;padding:14px;}
+.pft-result b{font-size:30px;color:var(--gold-300);font-family:'Poppins',sans-serif;}
+</style>
+</head>
+<body oncontextmenu="return false;">
+
+<div id="lockOverlay" class="lock-overlay">
+  <div class="lock-card">
+    <div class="badge" style="margin:0 auto;">प</div>
+    <h2>🔒 यह ऐप सुरक्षित है</h2>
+    <p>यह प्रोडक्ट केवल खरीदने वाले उपयोगकर्ता के लिए है। कृपया खरीद के बाद मिला Access Code डालें।</p>
+    <input id="accessInput" type="text" placeholder="ACCESS CODE" autocomplete="off">
+    <button class="btn" onclick="checkAccess()">🔓 अनलॉक करें</button>
+    <div class="lock-error" id="accessError"></div>
+  </div>
+</div>
+<div class="watermark-layer" id="watermarkLayer"></div>
+
+<div class="app">
+<header class="topbar">
+  <div class="brand">
+    <div class="badge">प</div>
+    <div><h1>MPESB Police/SI Prep</h1><span id="trackLabel">Constable (GD) 2026</span></div>
+  </div>
+  <div style="display:flex;gap:6px;align-items:center;">
+    <div class="trackpill" onclick="goTo('home')">🔁 ट्रैक बदलें</div>
+    <div class="streak">🔥 <span id="streakCount">0</span></div>
+  </div>
+</header>
+
+<main>
+  <!-- HOME -->
+  <section id="screen-home" class="screen active">
+    <h2 class="title">नमस्ते, योद्धा! 🎯</h2>
+    <p class="sub">पहले अपना पद चुनें — प्रैक्टिस, मॉक टेस्ट व नोट्स उसी हिसाब से दिखेंगे।</p>
+    <div class="track-toggle">
+      <button id="trackBtnConstable" onclick="setTrack('constable')">👮 आरक्षक (Constable GD)</button>
+      <button id="trackBtnSi" onclick="setTrack('si')">🎖️ सूबेदार / SI</button>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><b id="homeAttempted">0</b><span>प्रश्न हल किए</span></div>
+      <div class="stat"><b id="homeAccuracy">0%</b><span>सटीकता</span></div>
+      <div class="stat"><b id="homeMocks">0</b><span>मॉक टेस्ट</span></div>
+      <div class="stat"><b id="homePlan">0%</b><span>प्लान पूरा</span></div>
+    </div>
+    <div class="subject-row" onclick="goTo('practice')"><div><div class="name">📘 विषयवार अभ्यास (A/B/C)</div><div class="meta">सिलेबस अनुसार 3 भाग</div></div><div class="chevron">›</div></div>
+    <div class="subject-row" onclick="goTo('mock')"><div><div class="name">⏱️ फुल-लेंथ मॉक टेस्ट</div><div class="meta">40% + 30% + 30% पैटर्न</div></div><div class="chevron">›</div></div>
+    <div class="subject-row" onclick="goTo('planner')"><div><div class="name">🗓️ स्टडी प्लानर</div><div class="meta">30/60/90-दिन रूटीन</div></div><div class="chevron">›</div></div>
+    <div class="subject-row" onclick="goTo('notes')"><div><div class="name">📕 फैक्टलाइन नोट्स</div><div class="meta">A/B/C अनुसार रिवीज़न</div></div><div class="chevron">›</div></div>
+  </section>
+
+  <!-- PRACTICE list -->
+  <section id="screen-practice" class="screen">
+    <h2 class="title">विषयवार अभ्यास</h2>
+    <p class="sub" id="practiceSub">एक भाग चुनें — हर सवाल के बाद उत्तर व व्याख्या दिखेगी।</p>
+    <div id="subjectList"></div>
+  </section>
+
+  <!-- PRACTICE quiz -->
+  <section id="screen-quiz" class="screen">
+    <div class="qcard">
+      <span class="qtag" id="quizTag">भाग</span>
+      <span class="srctag" id="quizSrc" style="display:none;"></span>
+      <div class="qtext" id="quizQ">...</div>
+      <div id="quizOpts"></div>
+      <div class="explain" id="quizExplain" style="display:none;"></div>
+      <div class="qnav">
+        <button class="btn ghost" style="width:auto;padding:9px 14px;" onclick="prevQuestion()">← पिछला</button>
+        <span id="quizProg">1 / 12</span>
+        <button class="btn secondary" style="width:auto;padding:9px 16px;" onclick="nextQuestion()">अगला →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOCK setup -->
+  <section id="screen-mock" class="screen">
+    <h2 class="title">फुल-लेंथ मॉक टेस्ट</h2>
+    <p class="sub">आधिकारिक पैटर्न: A-40%, B-30%, C-30%</p>
+    <div class="card">
+      <label class="field-label">कुल प्रश्न</label>
+      <select id="mockCount"><option value="30">30</option><option value="50">50</option><option value="100" selected>100 (पूरा पेपर)</option></select>
+      <label class="field-label">समय (मिनट)</label>
+      <select id="mockTime"><option value="30">30</option><option value="60">60</option><option value="120" selected>120</option></select>
+      <label class="field-label">नेगेटिव मार्किंग</label>
+      <select id="mockNeg"><option value="0" selected>नहीं (आधिकारिक पैटर्न में नहीं है)</option><option value="0.25">हाँ (-0.25 अभ्यास हेतु)</option></select>
+      <button class="btn" onclick="startMock()">🚀 मॉक टेस्ट शुरू करें</button>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:10px;">पिछले मॉक टेस्ट</div>
+      <div id="mockHistory" class="empty">अभी तक कोई मॉक टेस्ट नहीं दिया।</div>
+    </div>
+  </section>
+
+  <!-- MOCK runner -->
+  <section id="screen-mockrun" class="screen">
+    <div class="mock-header"><span class="pill" id="mockProgPill">प्रश्न 1/30</span><span class="timer">⏱️ <span id="mockTimer">30:00</span></span></div>
+    <div class="qcard"><span class="qtag" id="mockTag">भाग</span><div class="qtext" id="mockQ">...</div><div id="mockOpts"></div></div>
+    <div class="row2" style="margin-top:14px;"><button class="btn ghost" onclick="mockPrev()">← पिछला</button><button class="btn" onclick="mockNext()">अगला →</button></div>
+    <button class="btn secondary" style="margin-top:10px;" onclick="submitMock()">✅ टेस्ट जमा करें</button>
+  </section>
+
+  <!-- MOCK result -->
+  <section id="screen-mockresult" class="screen">
+    <h2 class="title">📊 परिणाम</h2>
+    <div class="card" style="text-align:center;">
+      <div class="result-ring" id="resultRing"><b id="resultPct">0%</b><span>स्कोर</span></div>
+      <div class="stat-grid" style="margin-top:14px;">
+        <div class="stat"><b id="resAttempted">0</b><span>हल किए</span></div>
+        <div class="stat"><b id="resCorrect">0</b><span>सही</span></div>
+        <div class="stat"><b id="resWrong">0</b><span>गलत</span></div>
+        <div class="stat"><b id="resSkipped">0</b><span>छूटे</span></div>
+      </div>
+    </div>
+    <div class="card"><div style="font-weight:700;margin-bottom:8px;">उत्तर विश्लेषण</div><div id="resReview"></div></div>
+    <button class="btn" onclick="goTo('mock')">नया मॉक टेस्ट</button>
+  </section>
+
+  <!-- PLANNER -->
+  <section id="screen-planner" class="screen">
+    <h2 class="title">स्मार्ट स्टडी प्लानर</h2>
+    <div class="card" id="plannerSetup">
+      <label class="field-label">कितने दिन?</label>
+      <select id="planDuration"><option value="30">30 दिन</option><option value="60" selected>60 दिन</option><option value="90">90 दिन</option></select>
+      <label class="field-label">रोज़ाना पढ़ाई (घंटे)</label>
+      <select id="planHours"><option value="2">2 घंटे</option><option value="4" selected>4 घंटे</option><option value="6">6+ घंटे</option></select>
+      <button class="btn" onclick="generatePlan()">📅 प्लान बनाएं</button>
+    </div>
+    <div class="card" id="planProgressCard" style="display:none;">
+      <div style="display:flex;justify-content:space-between;font-size:13px;"><span>प्रगति</span><b id="planPctText">0%</b></div>
+      <div class="progress-bar"><div id="planPctBar" style="width:0%"></div></div>
+      <button class="btn ghost" style="margin-top:12px;" onclick="resetPlanConfirm()">🔄 नया प्लान</button>
+    </div>
+    <div id="plannerDays"></div>
+  </section>
+
+  <!-- NOTES / EBOOK -->
+  <section id="screen-notes" class="screen">
+    <h2 class="title">📕 फैक्टलाइन नोट्स</h2>
+    <p class="sub">सिलेबस के तीनों भाग — A, B, C — रिवीज़न फैक्टलाइन।</p>
+    <div class="notes-wrap" id="notesContent"></div>
+  </section>
+
+  <!-- PROGRESS / PHYSICAL -->
+  <section id="screen-progress" class="screen">
+    <h2 class="title">प्रगति व फिजिकल टेस्ट</h2>
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:10px;">भागवार सटीकता</div>
+      <div id="subjectAccuracy"></div>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:6px;">🏃 PFT सेल्फ़-स्कोर कैलकुलेटर</div>
+      <p class="sub" style="margin-bottom:10px;">आधिकारिक नियम पुस्तिका के मापदंड पर आधारित अनुमानित स्कोर (कुल 100, न्यूनतम उत्तीर्ण 30)।</p>
+      <label class="field-label">वर्ग</label>
+      <select id="pftGender"><option value="m">पुरुष</option><option value="f">महिला</option></select>
+      <label class="field-label">800 मीटर दौड़ का समय (सेकंड में)</label>
+      <input type="number" id="pftDash" placeholder="जैसे 150">
+      <label class="field-label">लंबी कूद (मीटर में)</label>
+      <input type="number" id="pftJump" placeholder="जैसे 4.2" step="0.01">
+      <label class="field-label">गोला फेंक (मीटर में)</label>
+      <input type="number" id="pftShot" placeholder="जैसे 6.5" step="0.01">
+      <button class="btn" onclick="calcPFT()">🎯 स्कोर निकालें</button>
+      <div id="pftResultBox" style="display:none;">
+        <div class="pft-result"><b id="pftTotal">0</b><div style="font-size:12px;color:var(--muted);">कुल अनुमानित अंक (/100)</div></div>
+        <div class="stat-grid">
+          <div class="stat"><b id="pftDashScore">0</b><span>दौड़ अंक (/40)</span></div>
+          <div class="stat"><b id="pftJumpScore">0</b><span>कूद अंक (/30)</span></div>
+          <div class="stat"><b id="pftShotScore">0</b><span>गोला अंक (/30)</span></div>
+        </div>
+        <div id="pftVerdict" class="explain" style="margin-top:10px;"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:10px;">📌 साप्ताहिक फिजिकल लक्ष्य</div>
+      <div id="physicalList"></div>
+      <button class="btn ghost" onclick="addPhysical()">+ नया लक्ष्य जोड़ें</button>
+    </div>
+    <div class="card"><button class="btn secondary" onclick="if(confirm('सारा डेटा रीसेट करें?'))resetAll()">⚠️ सारा डेटा रीसेट करें</button></div>
+  </section>
+</main>
+
+<nav class="tabs-nav"><div class="inner">
+  <button class="tab-btn active" data-t="home" onclick="goTo('home')"><span class="ic">🏠</span>होम</button>
+  <button class="tab-btn" data-t="practice" onclick="goTo('practice')"><span class="ic">📘</span>अभ्यास</button>
+  <button class="tab-btn" data-t="mock" onclick="goTo('mock')"><span class="ic">⏱️</span>मॉक</button>
+  <button class="tab-btn" data-t="notes" onclick="goTo('notes')"><span class="ic">📕</span>नोट्स</button>
+  <button class="tab-btn" data-t="progress" onclick="goTo('progress')"><span class="ic">📊</span>प्रगति</button>
+</div></nav>
+</div>
+
+<script>
+/* ================= ACCESS LOCK ================= */
+const ACCESS_CODE = "MPPOLICE2026"; // विक्रेता: बेचने से पहले इसे अपने पसंदीदा कोड में बदलें
+function checkAccess(){
+  const v = document.getElementById('accessInput').value.trim().toUpperCase();
+  if(v === ACCESS_CODE){
+    localStorage.setItem('mpesb_unlocked','yes');
+    document.getElementById('lockOverlay').style.display='none';
+  } else {
+    document.getElementById('accessError').textContent = '❌ गलत कोड। कृपया पुनः प्रयास करें।';
+  }
+}
+if(localStorage.getItem('mpesb_unlocked')==='yes'){ document.getElementById('lockOverlay').style.display='none'; }
+(function initWatermark(){
+  const wl = document.getElementById('watermarkLayer');
+  for(let i=0;i<24;i++){ const s=document.createElement('span'); s.textContent='MPESB Prep • Personal Use Only'; wl.appendChild(s); }
+})();
+
+/* ================= QUESTION BANK (A/B/C) ================= */
+// track: 'common' (दोनों वर्गों में), 'constable', 'si'
+const CATS = {
+  A:{label:'सामान्य ज्ञान एवं तार्किक ज्ञान', icon:'🌐', marks:40},
+  B:{label:'बौद्धिक क्षमता एवं मानसिक अभिरुचि', icon:'🧩', marks:30},
+  C:{label:'विज्ञान एवं सरल अंकगणित', icon:'🔬', marks:30}
+};
+const BANK = { A:[], B:[], C:[] };
+
+function Q(cat, text, opts, correct, explain, track, src){
+  BANK[cat].push({text,opts,correct,explain,track:track||'common',src:src||null});
+}
+
+/* ---- A: सामान्य ज्ञान एवं तार्किक ज्ञान (common syllabus GK + MP GK) ---- */
+Q('A',"भारत के प्रथम राष्ट्रपति कौन थे?",["डॉ. राजेंद्र प्रसाद","जवाहरलाल नेहरू","सरदार पटेल","डॉ. भीमराव आंबेडकर"],0,"डॉ. राजेंद्र प्रसाद भारत के प्रथम राष्ट्रपति (1950-1962) थे।");
+Q('A',"भारतीय संविधान लागू हुआ था —",["26 जनवरी 1950","15 अगस्त 1947","26 नवंबर 1949","2 अक्टूबर 1950"],0,"संविधान 26 नवंबर 1949 को अपनाया गया और 26 जनवरी 1950 को लागू हुआ।");
+Q('A',"मौलिक अधिकार संविधान के किस भाग में हैं?",["भाग-2","भाग-3","भाग-4","भाग-5"],1,"मौलिक अधिकार संविधान के भाग-3 (अनुच्छेद 12-35) में वर्णित हैं।");
+Q('A',"भारत रत्न सम्मान किस क्षेत्र के लिए दिया जाता है?",["केवल खेल","केवल विज्ञान","असाधारण राष्ट्रीय सेवा","केवल सेना"],2,"भारत रत्न किसी भी क्षेत्र में असाधारण राष्ट्रीय सेवा के लिए दिया जाता है।");
+Q('A',"'पंचायती राज' किस संविधान संशोधन से लागू हुआ?",["42वां","61वां","73वां","86वां"],2,"73वें संविधान संशोधन (1992) से पंचायती राज व्यवस्था लागू हुई।");
+Q('A',"राज्यसभा के सदस्यों का कार्यकाल होता है —",["5 वर्ष","6 वर्ष","4 वर्ष","आजीवन"],1,"राज्यसभा सदस्य का कार्यकाल 6 वर्ष का होता है।");
+Q('A',"ओलंपिक खेलों का आयोजन कितने वर्ष में एक बार होता है?",["2 वर्ष","3 वर्ष","4 वर्ष","5 वर्ष"],2,"ओलंपिक खेल प्रत्येक 4 वर्ष में आयोजित होते हैं।");
+Q('A',"'भारत छोड़ो आंदोलन' किस वर्ष शुरू हुआ?",["1930","1942","1947","1920"],1,"भारत छोड़ो आंदोलन 8 अगस्त 1942 को शुरू हुआ था।");
+Q('A',"राष्ट्रीय ध्वज की लंबाई-चौड़ाई का अनुपात है —",["3:2","2:1","4:3","1:1"],0,"राष्ट्रीय ध्वज की लंबाई और चौड़ाई का अनुपात 3:2 होता है।");
+Q('A',"भारत का राष्ट्रीय पंचांग किस पर आधारित है?",["शक संवत","विक्रम संवत","हिजरी संवत","ग्रेगोरियन"],0,"भारत का राष्ट्रीय पंचांग शक संवत पर आधारित है।");
+Q('A',"संयुक्त राष्ट्र संघ की स्थापना कब हुई?",["1945","1947","1950","1939"],0,"संयुक्त राष्ट्र संघ की स्थापना 24 अक्टूबर 1945 को हुई।");
+Q('A',"भारत का सर्वोच्च सैन्य सम्मान है —",["महावीर चक्र","परम वीर चक्र","अशोक चक्र","वीर चक्र"],1,"परम वीर चक्र भारत का सर्वोच्च शौर्य सम्मान है।");
+Q('A',"भारत का राष्ट्रीय पशु है —",["बाघ","शेर","हाथी","हिरण"],0,"बाघ भारत का राष्ट्रीय पशु है।");
+Q('A',"भारत का राष्ट्रीय पक्षी है —",["मोर","तोता","कबूतर","बाज"],0,"मोर भारत का राष्ट्रीय पक्षी है।");
+Q('A',"संविधान की प्रस्तावना में निम्न में से कौन-सा शब्द नहीं है?",["समाजवादी","पंथनिरपेक्ष","गणतंत्रात्मक","राजतंत्रात्मक"],3,"प्रस्तावना में 'राजतंत्रात्मक' शब्द नहीं है।");
+Q('A',"भारतीय संविधान का शिल्पी किसे कहा जाता है?",["डॉ. भीमराव आंबेडकर","महात्मा गांधी","जवाहरलाल नेहरू","सरदार पटेल"],0,"डॉ. भीमराव आंबेडकर प्रारूप समिति के अध्यक्ष थे।");
+Q('A',"मौलिक कर्तव्य मूल रूप से कितने जोड़े गए, अब कुल कितने हैं?",["10, अब 11","10, अब 12","8, अब 10","12, अब 14"],0,"42वें संशोधन से 10 जोड़े गए; 86वें संशोधन से अब कुल 11 हैं।");
+Q('A',"गांधी जयंती किस तारीख को मनाई जाती है?",["2 अक्टूबर","30 जनवरी","15 अगस्त","26 जनवरी"],0,"महात्मा गांधी की जयंती 2 अक्टूबर को मनाई जाती है।");
+Q('A',"मध्यप्रदेश की स्थापना कब हुई थी?",["1 नवंबर 1956","26 जनवरी 1950","1 मई 1960","15 अगस्त 1947"],0,"मध्यप्रदेश की स्थापना 1 नवंबर 1956 को हुई।");
+Q('A',"मध्यप्रदेश की राजधानी है —",["इंदौर","भोपाल","जबलपुर","ग्वालियर"],1,"भोपाल मध्यप्रदेश की राजधानी है।");
+Q('A',"मध्यप्रदेश उच्च न्यायालय कहाँ स्थित है?",["भोपाल","इंदौर","जबलपुर","ग्वालियर"],2,"मध्यप्रदेश उच्च न्यायालय की मुख्य पीठ जबलपुर में है।");
+Q('A',"मध्यप्रदेश से होकर बहने वाली प्रमुख नदी है —",["गंगा","नर्मदा","यमुना","कृष्णा"],1,"नर्मदा नदी मध्यप्रदेश की जीवनरेखा मानी जाती है।");
+Q('A',"कान्हा राष्ट्रीय उद्यान किस वन्यजीव के लिए प्रसिद्ध है?",["बाघ","हाथी","शेर","जिराफ"],0,"कान्हा राष्ट्रीय उद्यान बाघों के लिए प्रसिद्ध टाइगर रिज़र्व है।");
+Q('A',"मध्यप्रदेश का राज्य पशु है —",["बाघ","बारहसिंगा","हिरण","चीतल"],1,"बारहसिंगा मध्यप्रदेश का राज्य पशु है।");
+Q('A',"मध्यप्रदेश का राज्य पक्षी है —",["मोर","दूधराज","तोता","उल्लू"],1,"दूधराज (Paradise Flycatcher) मध्यप्रदेश का राज्य पक्षी है।");
+Q('A',"'भारत का दिल' किस राज्य को कहा जाता है?",["उत्तर प्रदेश","मध्यप्रदेश","महाराष्ट्र","राजस्थान"],1,"केंद्रीय भौगोलिक स्थिति के कारण मध्यप्रदेश को 'भारत का दिल' कहा जाता है।");
+Q('A',"बांधवगढ़ राष्ट्रीय उद्यान किस जिले में है?",["उमरिया","छिंदवाड़ा","सिवनी","रीवा"],0,"बांधवगढ़ राष्ट्रीय उद्यान उमरिया जिले में स्थित है।");
+Q('A',"मध्यप्रदेश में जनसंख्या की दृष्टि से सबसे बड़ी जनजाति कौन-सी है?",["भील","गोंड","कोल","बैगा"],1,"मध्यप्रदेश में गोंड जनजाति की जनसंख्या सर्वाधिक है।");
+Q('A',"खजुराहो के मंदिर किस राजवंश द्वारा बनवाए गए?",["परमार","चंदेल","होल्कर","सिंधिया"],1,"खजुराहो के मंदिर चंदेल राजवंश ने बनवाए थे।");
+Q('A',"मध्यप्रदेश में वर्तमान में कुल जिलों की संख्या लगभग है —",["55","50","45","60"],0,"वर्तमान में मध्यप्रदेश में लगभग 55 जिले हैं (नई अधिसूचना से बदल सकती है)।");
+Q('A',"मध्यप्रदेश को कितने संभागों में बांटा गया है?",["10","8","12","6"],0,"मध्यप्रदेश को प्रशासनिक रूप से 10 संभागों में बांटा गया है।");
+Q('A',"क्षेत्रफल में मध्यप्रदेश का सबसे बड़ा जिला कौन-सा है?",["छिंदवाड़ा","इंदौर","भोपाल","जबलपुर"],0,"छिंदवाड़ा क्षेत्रफल के हिसाब से मध्यप्रदेश का सबसे बड़ा जिला है।");
+Q('A',"सांची का स्तूप मध्यप्रदेश के किस जिले में है?",["रायसेन","भोपाल","विदिशा","सागर"],0,"सांची का स्तूप रायसेन जिले में स्थित है (UNESCO विश्व धरोहर स्थल)।");
+// tagged real exam Qs (Constable-track, from MPESB Group-4 Asstt Grade-3 CRT-2024 paper)
+Q('A',"2020 में किस भारतीय खेल व्यक्तित्व को पद्म विभूषण पुरस्कार से सम्मानित किया गया?",["रोहित शर्मा","एम.पी. गणेश","रानी रामपाल","एम.सी. मैरी कॉम"],3,"मैरी कॉम को 2020 में पद्म विभूषण से सम्मानित किया गया था।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('A',"किस वर्ष भारत सरकार ने केंद्र-राज्य संबंधों पर सरकारिया आयोग की स्थापना की थी?",["1983","1982","1981","1980"],0,"सरकारिया आयोग की स्थापना 1983 में हुई थी।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('A',"भारत में 'हरित क्रांति का जनक' किसे कहा जाता है?",["जवाहरलाल नेहरू","एम.एस. स्वामीनाथन","महात्मा गांधीजी","वर्गीस कुरियन"],1,"एम.एस. स्वामीनाथन को भारत में हरित क्रांति का जनक कहा जाता है।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('A',"सुन्दर पिचाई किस वैश्विक प्रौद्योगिकी कंपनी के सीईओ हैं?",["गूगल","माइक्रोसॉफ्ट","एप्पल","आईबीएम"],0,"सुन्दर पिचाई गूगल (अल्फाबेट) के सीईओ हैं।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('A',"सरस्वती सम्मान प्रतिवर्ष किस क्षेत्र में उत्कृष्ट योगदान के लिए दिया जाता है?",["साहित्य","शास्त्रीय संगीत","शिक्षा","ललित कला"],0,"सरस्वती सम्मान साहित्य क्षेत्र के उत्कृष्ट योगदान के लिए दिया जाता है।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('A',"विश्व का सबसे बड़ा स्तनपायी जीव कौन-सा है?",["नीली व्हेल","अफ़्रीकी सफ़ेद गैंडा","अफ़्रीकी सवाना हाथी","दरियाई घोड़ा"],0,"नीली व्हेल (Blue Whale) विश्व का सबसे बड़ा स्तनपायी है।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('A',"संविधान के किस अनुच्छेद में भारतीय नागरिकों के 'मौलिक कर्तव्य' शामिल हैं?",["भाग III","भाग IV","भाग IV A","भाग V"],2,"मौलिक कर्तव्य संविधान के भाग IV-A (अनुच्छेद 51-क) में हैं।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('A',"वधावन बंदरगाह (सभी मौसम में उपयुक्त) किस राज्य में विकसित किया जा रहा है?",["तमिलनाडु","केरल","गुजरात","महाराष्ट्र"],3,"वधावन बंदरगाह महाराष्ट्र (पालघर) में विकसित किया जा रहा है।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('A',"मध्य प्रदेश में महात्मा गांधी राष्ट्रीय ग्रामीण रोजगार गारंटी योजना (मनरेगा अधिनियम) किस वर्ष लागू हुआ था?",["2007","2005","2010","2003"],1,"मनरेगा अधिनियम वर्ष 2005 में बना था।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('A',"चंबल किस नदी की सहायक नदी है?",["कृष्णा","यमुना","नर्मदा","महानदी"],1,"चंबल नदी यमुना की सहायक नदी है।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('A',"कान्हा राष्ट्रीय उद्यान निम्नलिखित में से कहाँ स्थित है?",["मैकाल पर्वतमाला","गुडविल शिखर","पश्चिमी घाट","महादेव पहाड़ी"],0,"कान्हा राष्ट्रीय उद्यान मैकाल पर्वतमाला में स्थित है।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('A',"कौन-सी नदी कर्क रेखा को दो बार पार करती है?",["माही","चंबल","ताप्ती","पेंच"],2,"ताप्ती नदी अपने घुमावदार मार्ग के कारण कर्क रेखा को दो बार पार करती है।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+
+/* ---- B: बौद्धिक क्षमता एवं मानसिक अभिरुचि (reasoning/aptitude) ---- */
+Q('B',"श्रृंखला पूरी करें: 2, 6, 12, 20, 30, ?",["36","40","42","44"],2,"अंतर 4,6,8,10,12 है → 30+12=42।");
+Q('B',"यदि CAT को कूट भाषा में DBU लिखा जाता है, तो DOG को क्या लिखेंगे?",["EPH","EPI","FQH","EQH"],0,"प्रत्येक अक्षर को अगले अक्षर से बदला गया है: D→E, O→P, G→H = EPH।");
+Q('B',"राम, श्याम का भाई है और श्याम, गीता का भाई है। गीता, राम की क्या लगती है?",["बहन","भाई","माँ","पत्नी"],0,"गीता, श्याम की बहन/भाई हो सकती है; यहाँ गीता राम की बहन है।");
+Q('B',"एक व्यक्ति उत्तर की ओर मुख करके खड़ा है। दायीं ओर 90° घूमता है, फिर पुनः दायीं ओर 90°। अब मुख किस दिशा में है?",["पूर्व","पश्चिम","दक्षिण","उत्तर"],2,"उत्तर से दायें 90° = पूर्व, पुनः दायें 90° = दक्षिण।");
+Q('B',"विषम शब्द/संख्या चुनें —",["आम","केला","गुलाब","सेब"],2,"आम, केला, सेब फल हैं; गुलाब फूल है, अतः विषम है।");
+Q('B',"यदि आज सोमवार है, तो 15 दिन बाद कौन-सा दिन होगा?",["सोमवार","मंगलवार","रविवार","बुधवार"],1,"15÷7=2 शेष 1 → सोमवार+1 दिन = मंगलवार।");
+Q('B',"श्रृंखला: A, C, F, J, ? — अगला अक्षर होगा",["N","O","P","M"],1,"अंतर 2,3,4,5 है: A(+2)C(+3)F(+4)J(+5)O।");
+Q('B',"48 का 1/4 भाग + 20 का 1/2 भाग = ?",["20","22","24","26"],1,"12+10=22।");
+Q('B',"शब्द 'BOOK' के अक्षरों को वर्णानुक्रम में लगाने पर तीसरा अक्षर कौन-सा है?",["B","K","O","O"],2,"वर्णानुक्रम: B,K,O,O → तीसरा अक्षर O है।");
+Q('B',"श्रृंखला पूरी करें: 3, 9, 27, 81, ?",["162","243","200","324"],1,"हर संख्या पिछली का 3 गुना है: 81×3 = 243।");
+Q('B',"दो अंकों वाली सबसे बड़ी संख्या है —",["99","100","98","90"],0,"दो अंकों की सबसे बड़ी संख्या 99 होती है।");
+Q('B',"'माँ का भाई' रिश्ते में कहलाता है —",["मामा","चाचा","फूफा","मौसा"],0,"माँ के भाई को मामा कहते हैं।");
+Q('B',"यदि A=1, B=2, C=3...हो, तो 'CAB' के कोड का योग क्या होगा?",["6","5","7","8"],0,"C=3, A=1, B=2 → योग = 6।");
+Q('B',"श्रृंखला पूरी करें: 100, 90, 81, 73, ?",["66","65","64","67"],0,"अंतर घटते क्रम में: 10,9,8,7 → 73-7=66।");
+// tagged (SI/Subedar-track, from MPESB PRT Subedar & SI 2026 paper)
+Q('B',"निम्नलिखित में से विषम चुनें: 11, 22, 33, 44",["11","22","33","44"],0,"11, 22, 33, 44 में केवल 11 अभाज्य संख्या है, शेष तीनों भाज्य (composite) हैं — इसलिए 11 विषम है।","si","MPESB PRT SUBEDAR AND SI, शिफ्ट-1, 16 जनवरी 2026");
+Q('B',"दो भाइयों की उम्र का अनुपात 3:5 है। उनकी उम्र का गुणनफल 135 है। छोटे भाई की उम्र क्या है?",["9 वर्ष","15 वर्ष","19 वर्ष","27 वर्ष"],0,"3x×5x=135 → x²=9 → x=3 → छोटे भाई की उम्र=3x=9 वर्ष।","si","MPESB PRT SUBEDAR AND SI, शिफ्ट-1, 16 जनवरी 2026");
+Q('B',"निम्न में से कौन-सा शब्द कर (टैक्स) का प्रकार नहीं है?",["इनकम टैक्स","जीएसटी","वैट","सब्सिडी"],3,"सब्सिडी सरकार द्वारा दी जाने वाली सहायता है, यह कर (टैक्स) का प्रकार नहीं है।","si","MPESB PRT SUBEDAR AND SI, शिफ्ट-1, 16 जनवरी 2026");
+Q('B',"वह दो अंकों की संख्या ज्ञात कीजिए, जो 4 से विभाज्य नहीं है?",["24","48","72","94"],3,"94, 4 से विभाज्य नहीं है (94÷4=23.5); शेष सभी 4 से पूर्णतः विभाज्य हैं।","si","MPESB PRT SUBEDAR AND SI, शिफ्ट-1, 16 जनवरी 2026");
+Q('B',"20 मार्च 1991 को बुधवार था, तो 20 मार्च 1992 को सप्ताह का कौन-सा दिन था?",["गुरुवार","मंगलवार","शुक्रवार","शनिवार"],2,"1992 लीप वर्ष है, इसलिए 366 दिन बीतते हैं; 366÷7 का शेष 2 → बुधवार+2=शुक्रवार।","si","MPESB PRT SUBEDAR AND SI, शिफ्ट-1, 16 जनवरी 2026");
+Q('B',"छह घर K, L, M, N, O, P एक कॉलोनी में हैं। P, K के 400मी पश्चिम में; O, K के 300मी उत्तर में; L, K के 250मी दक्षिण में; N, L के 150मी दक्षिण में है। O और N के बीच सीधी दूरी कितनी है?",["400 मी","600 मी","700 मी","350 मी"],2,"O, K से 300मी उत्तर (0,300); N, K से 400मी दक्षिण (0,-400) — सीधी दूरी = 300+400=700 मी।","si","MPESB PRT SUBEDAR AND SI, शिफ्ट-1, 16 जनवरी 2026");
+// tagged (Constable-track, aptitude, from Group-4 CRT-2024)
+Q('B',"औसत ज्ञात करें: 20, 56, 44, 25, 35",["33","34","35","36"],3,"योग=180, औसत=180/5=36।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('B',"औसत ज्ञात करें: 64, 48, 14, 55, 24",["37","38","39","41"],3,"योग=205, औसत=205/5=41।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('B',"विषम चुनें: 12-144, 13-156, 15-180, 16-176",["12-144","13-156","15-180","16-176"],3,"12,13,15 में संख्या × 12 = दूसरी संख्या है (12×12=144, 13×12=156, 15×12=180) पर 16×12=192≠176, अतः 16-176 विषम है।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('B',"एक टेप रिकॉर्डर की कीमत ₹2100 है जो अंकित मूल्य से 30% कम है। अंकित मूल्य ज्ञात कीजिए।",["₹4000","₹3000","₹2000","₹1000"],1,"2100 अंकित मूल्य का 70% है → अंकित मूल्य=2100/0.7=₹3000।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+
+/* ---- C: विज्ञान एवं सरल अंकगणित ---- */
+Q('C',"मानव शरीर में सबसे बड़ा अंग कौन-सा है?",["यकृत","त्वचा","फेफड़े","मस्तिष्क"],1,"त्वचा मानव शरीर का सबसे बड़ा अंग है।");
+Q('C',"रक्त का शुद्धिकरण किस अंग में होता है?",["हृदय","वृक्क (किडनी)","यकृत","फेफड़े"],1,"वृक्क (किडनी) रक्त को छानकर शुद्ध करते हैं।");
+Q('C',"जल का रासायनिक सूत्र है —",["CO2","H2O","O2","NaCl"],1,"जल का रासायनिक सूत्र H2O है।");
+Q('C',"विटामिन 'C' की कमी से कौन-सा रोग होता है?",["रतौंधी","स्कर्वी","रिकेट्स","बेरी-बेरी"],1,"विटामिन C की कमी से स्कर्वी रोग होता है।");
+Q('C',"प्रकाश संश्लेषण की क्रिया पौधों के किस भाग में होती है?",["जड़","तना","पत्तियाँ","फूल"],2,"प्रकाश संश्लेषण मुख्यतः पत्तियों में क्लोरोफिल की मदद से होता है।");
+Q('C',"मानव हृदय में कितने कक्ष होते हैं?",["2","3","4","5"],2,"मानव हृदय में 4 कक्ष होते हैं — 2 अलिंद व 2 निलय।");
+Q('C',"सबसे हल्की गैस कौन-सी है?",["नाइट्रोजन","हाइड्रोजन","ऑक्सीजन","हीलियम"],1,"हाइड्रोजन सबसे हल्की गैस है।");
+Q('C',"वयस्क मानव शरीर में हड्डियों की कुल संख्या होती है —",["206","210","200","220"],0,"वयस्क मानव शरीर में सामान्यतः 206 हड्डियाँ होती हैं।");
+Q('C',"पौधों में जल व खनिजों का परिवहन किसके द्वारा होता है?",["जाइलम","फ्लोएम","पत्ती","जड़ की त्वचा"],0,"जाइलम ऊतक जड़ से पत्तियों तक जल का परिवहन करता है।");
+Q('C',"pH मान 7 किसे दर्शाता है?",["उदासीन","अम्लीय","क्षारीय","अत्यधिक अम्लीय"],0,"pH मान 7 उदासीन घोल को दर्शाता है — जैसे शुद्ध जल।");
+Q('C',"किसी संख्या का 20% यदि 40 है, तो वह संख्या है —",["160","200","220","180"],1,"20% = 40 → पूरी संख्या = 40 × 100/20 = 200।");
+Q('C',"एक वस्तु 800 रुपये में खरीदकर 960 में बेची गई। लाभ प्रतिशत है —",["15%","20%","25%","18%"],1,"लाभ = 160, लाभ% = (160/800)×100 = 20%।");
+Q('C',"यदि 5 आदमी किसी काम को 12 दिन में पूरा करते हैं, तो 10 आदमी उसे कितने दिन में करेंगे?",["6 दिन","4 दिन","24 दिन","10 दिन"],0,"पुरुष×दिन स्थिर: 5×12=10×x → x=6 दिन।");
+Q('C',"60 किमी/घंटा की चाल को मीटर/सेकंड में बदलें —",["16.67 मी/से","10 मी/से","20 मी/से","12 मी/से"],0,"60×5/18 = 16.67 मीटर/सेकंड।");
+Q('C',"1000 रुपये पर 5% वार्षिक दर से 2 वर्ष का साधारण ब्याज है —",["100","50","200","150"],0,"SI = (1000×5×2)/100 = 100 रुपये।");
+Q('C',"2 : 3 के अनुपात में 50 को बाँटने पर छोटा भाग है —",["18","20","25","15"],1,"कुल भाग=5, छोटा भाग = 50×2/5 = 20।");
+Q('C',"किसी त्रिभुज के तीनों कोणों का योग होता है —",["90°","180°","360°","270°"],1,"त्रिभुज के तीनों कोणों का योग सदैव 180° होता है।");
+Q('C',"25 का वर्गमूल है —",["4","5","6","25"],1,"√25 = 5।");
+Q('C',"दो संख्याओं का LCM 60 व HCF 5 है। यदि एक संख्या 15 है, तो दूसरी संख्या है —",["20","25","15","30"],0,"LCM×HCF = संख्या1×संख्या2 → 60×5=300; 300/15=20।");
+Q('C',"1200 रुपये पर 10% वार्षिक दर से 3 वर्ष का साधारण ब्याज है —",["360","320","400","300"],0,"SI = (1200×10×3)/100 = 360 रुपये।");
+// tagged (SI-track, from MPESB PRT Subedar & SI 2026 — Physics/Chemistry)
+Q('C',"विरामावस्था से छोड़े जाने पर झुके हुए तल (Inclined Plane) पर कौन-सी वस्तु सबसे पहले तल पर पहुंचेगी?",["केवल ठोस सिलेंडर","केवल खोखला सिलेंडर","केवल रिंग","सब एक साथ पहुंचेंगे"],0,"ठोस सिलेंडर का जड़त्व आघूर्ण (moment of inertia) सबसे कम होता है, इसलिए वह सबसे पहले पहुंचता है।","si","MPESB PRT SUBEDAR AND SI, शिफ्ट-1, 16 जनवरी 2026");
+Q('C',"यदि वस्तु को अवतल दर्पण के वक्रता केंद्र (C) और फोकस (F) के बीच रखा जाए, तो प्रतिबिंब कैसा बनेगा?",["सीधा और छोटा","वस्तु के समान स्थान पर","वास्तविक, बड़ा, और C से परे","आभासी और बिंदु-आकार का"],2,"C और F के बीच रखी वस्तु का प्रतिबिंब वास्तविक, बड़ा (आवर्धित) और C से परे बनता है।","si","MPESB PRT SUBEDAR AND SI, शिफ्ट-1, 16 जनवरी 2026");
+Q('C',"गुरुत्वाकर्षण के विरुद्ध किसी पिंड को उठाने में किया गया कार्य किस पर निर्भर करता है?",["लिये गये समय पर","वेग पर","द्रव्यमान और ऊँचाई पर","त्वरण पर"],2,"कार्य = mgh, अर्थात यह द्रव्यमान (m) और ऊँचाई (h) पर निर्भर करता है।","si","MPESB PRT SUBEDAR AND SI, शिफ्ट-1, 16 जनवरी 2026");
+Q('C',"जब एक चलती कार को अचानक रोक दिया जाता है, तो उसकी गतिज ऊर्जा का क्या होता है?",["यह गायब हो जाती है","बिना रूपांतरण शून्य हो जाती है","ऊष्मा और ध्वनि में बदल जाती है","स्थितिज ऊर्जा में बदल जाती है"],2,"ऊर्जा संरक्षण नियम अनुसार गतिज ऊर्जा मुख्यतः ब्रेक के घर्षण से ऊष्मा व ध्वनि में परिवर्तित होती है।","si","MPESB PRT SUBEDAR AND SI, शिफ्ट-1, 16 जनवरी 2026");
+Q('C',"रदरफोर्ड के α-प्रकीर्णन प्रयोग में कुछ α-कण बड़े कोणों पर विक्षेपित क्यों हुए?",["इलेक्ट्रॉनों से टकराव के कारण","धनावेशित नाभिक द्वारा प्रतिकर्षण के कारण","फॉइल में चुंबकीय प्रभाव के कारण","द्रव्यमान के असमान वितरण के कारण"],1,"नाभिक धनावेशित व सघन होता है, जिससे α-कण प्रबल प्रतिकर्षण के कारण बड़े कोण पर विक्षेपित होते हैं।","si","MPESB PRT SUBEDAR AND SI, शिफ्ट-1, 16 जनवरी 2026");
+// tagged (Constable-track, from Group-4 CRT-2024 — Arithmetic/Algebra)
+Q('C',"यदि ₹12000 की राशि 2 वर्षों में चक्रवृद्धि ब्याज पर ₹14400 हो जाती है, तो वार्षिक ब्याज दर क्या है?",["8%","9.5%","12.4%","15%"],1,"(1+r)²=14400/12000=1.2 → r≈0.095 अर्थात लगभग 9.5%।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('C',"एक उत्पाद 25% छूट के बाद ₹600 में बेचा जाता है। अंकित मूल्य क्या था?",["₹750","₹800","₹850","₹900"],1,"अंकित मूल्य = 600/0.75 = ₹800।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('C',"दो पाइप क्रमशः 15 और 20 घंटे में टैंक भर सकते हैं। एक तीसरा पाइप 30 घंटे में इसे खाली करता है। यदि सभी एक साथ खोले जाएँ, तो टैंक भरने में कितना समय लगेगा?",["10 घंटे","12 घंटे","15 घंटे","18 घंटे"],1,"दर = 1/15+1/20-1/30 = 1/12 → 12 घंटे में टैंक भरेगा।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+Q('C',"यदि f(x) = x + 4 है, तो f(2) क्या होगा?",["2","4","6","1"],2,"f(2) = 2+4 = 6।","constable","MPESB Group-4 Asstt.Grade-3 CRT-2024, शिफ्ट-2, 08 मई 2025");
+
+/* ================= STATE / STORAGE ================= */
+const LS_KEY = "mpesb_prep_v2";
+function loadState(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)) || defaultState(); }catch(e){ return defaultState(); } }
+function defaultState(){ return { track:'constable', attempts:{A:0,B:0,C:0}, correct:{A:0,B:0,C:0}, mockHistory:{constable:[],si:[]}, plan:null, planDone:{}, lastActiveDate:null, streak:0, physical:[] }; }
+let state = loadState();
+function save(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){} }
+function touchStreak(){
+  const today = new Date().toDateString();
+  if(state.lastActiveDate !== today){
+    const y = new Date(); y.setDate(y.getDate()-1);
+    state.streak = (state.lastActiveDate === y.toDateString()) ? state.streak+1 : 1;
+    state.lastActiveDate = today; save();
+  }
+}
+touchStreak();
+
+function setTrack(t){ state.track=t; save(); goTo('home'); }
+function poolFor(cat, track){ return BANK[cat].filter(q=> q.track==='common' || q.track===track); }
+
+/* ================= NAV ================= */
+function goTo(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+  const tb=document.querySelector('.tab-btn[data-t="'+name+'"]'); if(tb) tb.classList.add('active');
+  if(name==='home') renderHome();
+  if(name==='practice') renderSubjectList();
+  if(name==='mock') renderMockHistory();
+  if(name==='planner') renderPlanner();
+  if(name==='notes') renderNotes();
+  if(name==='progress') renderProgress();
+  window.scrollTo(0,0);
+}
+
+function renderHome(){
+  document.getElementById('streakCount').textContent = state.streak;
+  document.getElementById('trackLabel').textContent = state.track==='si' ? 'सूबेदार / SI 2026' : 'Constable (GD) 2026';
+  document.getElementById('trackBtnConstable').classList.toggle('active', state.track==='constable');
+  document.getElementById('trackBtnSi').classList.toggle('active', state.track==='si');
+  let att=0,cor=0; ['A','B','C'].forEach(c=>{att+=state.attempts[c]||0; cor+=state.correct[c]||0;});
+  document.getElementById('homeAttempted').textContent = att;
+  document.getElementById('homeAccuracy').textContent = att? Math.round(cor/att*100)+'%':'0%';
+  document.getElementById('homeMocks').textContent = (state.mockHistory[state.track]||[]).length;
+  let planPct=0;
+  if(state.plan && state.plan.track===state.track){
+    const total=state.plan.days.length, done=Object.values(state.planDone).filter(Boolean).length;
+    planPct = total? Math.round(done/total*100):0;
+  }
+  document.getElementById('homePlan').textContent = planPct+'%';
+}
+
+/* ================= PRACTICE ================= */
+function renderSubjectList(){
+  document.getElementById('practiceSub').textContent = (state.track==='si'?'सूबेदार/SI':'आरक्षक (GD)') + ' सिलेबस के अनुसार तीन भाग:';
+  const el=document.getElementById('subjectList'); el.innerHTML='';
+  ['A','B','C'].forEach(cat=>{
+    const c=CATS[cat]; const pool=poolFor(cat,state.track);
+    const att=state.attempts[cat]||0, cor=state.correct[cat]||0, acc=att?Math.round(cor/att*100):0;
+    const div=document.createElement('div'); div.className='subject-row'; div.onclick=()=>startQuiz(cat);
+    div.innerHTML = `<div><div class="name">${c.icon} भाग ${cat} — ${c.label}</div><div class="meta">${pool.length} प्रश्न • ${c.marks} अंक • सटीकता ${acc}%</div></div><div class="chevron">›</div>`;
+    el.appendChild(div);
+  });
+}
+let quizState=null;
+function shuffle(arr){ for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} return arr; }
+function startQuiz(cat){
+  const pool=poolFor(cat,state.track);
+  quizState={cat, pool, idx:0, order:shuffle([...Array(pool.length).keys()]), answered:{}};
+  goTo('quiz'); renderQuizQuestion();
+}
+function renderQuizQuestion(){
+  const q=quizState.pool[quizState.order[quizState.idx]];
+  document.getElementById('quizTag').textContent = CATS[quizState.cat].icon+' भाग '+quizState.cat;
+  const srcEl=document.getElementById('quizSrc');
+  if(q.src){ srcEl.style.display='block'; srcEl.textContent='🏷️ '+q.src; } else { srcEl.style.display='none'; }
+  document.getElementById('quizQ').textContent=q.text;
+  document.getElementById('quizProg').textContent=(quizState.idx+1)+' / '+quizState.pool.length;
+  const opts=document.getElementById('quizOpts'); opts.innerHTML='';
+  const ex=document.getElementById('quizExplain');
+  const prevAns = quizState.answered[quizState.idx];
+  q.opts.forEach((t,i)=>{
+    const b=document.createElement('button'); b.className='opt'; b.textContent=t;
+    if(prevAns!==undefined){
+      if(i===q.correct) b.classList.add('correct'); else if(i===prevAns) b.classList.add('wrong');
+    } else {
+      b.onclick=()=>answerQuiz(i,q);
+    }
+    opts.appendChild(b);
+  });
+  if(prevAns!==undefined){ ex.style.display='block'; ex.textContent='💡 '+q.explain; }
+  else { ex.style.display='none'; }
+}
+function answerQuiz(i,q){
+  quizState.answered[quizState.idx]=i;
+  state.attempts[quizState.cat]=(state.attempts[quizState.cat]||0)+1;
+  if(i===q.correct) state.correct[quizState.cat]=(state.correct[quizState.cat]||0)+1;
+  save(); touchStreak();
+  renderQuizQuestion();
+}
+function nextQuestion(){ if(quizState.idx<quizState.pool.length-1){quizState.idx++; renderQuizQuestion();} else { goTo('practice'); } }
+function prevQuestion(){ if(quizState.idx>0){quizState.idx--; renderQuizQuestion();} }
+
+/* ================= MOCK ================= */
+let mockState=null, mockTimerInt=null;
+function startMock(){
+  const count=parseInt(document.getElementById('mockCount').value);
+  const minutes=parseInt(document.getElementById('mockTime').value);
+  const neg=parseFloat(document.getElementById('mockNeg').value);
+  let aN=Math.round(count*0.4), bN=Math.round(count*0.3), cN=count-aN-bN;
+  const poolA=shuffle(poolFor('A',state.track).map(q=>({...q,cat:'A'})));
+  const poolB=shuffle(poolFor('B',state.track).map(q=>({...q,cat:'B'})));
+  const poolC=shuffle(poolFor('C',state.track).map(q=>({...q,cat:'C'})));
+  let picked=[...poolA.slice(0,aN), ...poolB.slice(0,bN), ...poolC.slice(0,cN)];
+  let shortfall = count - picked.length;
+  if(shortfall>0){
+    const rest=shuffle([...poolA.slice(aN),...poolB.slice(bN),...poolC.slice(cN)]);
+    picked=[...picked, ...rest.slice(0,shortfall)];
+  }
+  picked=shuffle(picked);
+  mockState={questions:picked, answers:new Array(picked.length).fill(null), idx:0, neg, secondsLeft:minutes*60};
+  goTo('mockrun'); renderMockQuestion(); clearInterval(mockTimerInt);
+  mockTimerInt=setInterval(()=>{ mockState.secondsLeft--; updateMockTimer(); if(mockState.secondsLeft<=0){clearInterval(mockTimerInt); submitMock();} },1000);
+  updateMockTimer();
+}
+function updateMockTimer(){ const m=Math.max(0,Math.floor(mockState.secondsLeft/60)); const s=Math.max(0,mockState.secondsLeft%60); document.getElementById('mockTimer').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'); }
+function renderMockQuestion(){
+  const q=mockState.questions[mockState.idx];
+  document.getElementById('mockProgPill').textContent=`प्रश्न ${mockState.idx+1}/${mockState.questions.length}`;
+  document.getElementById('mockTag').textContent = CATS[q.cat].icon+' भाग '+q.cat;
+  document.getElementById('mockQ').textContent=q.text;
+  const opts=document.getElementById('mockOpts'); opts.innerHTML='';
+  q.opts.forEach((t,i)=>{
+    const b=document.createElement('button'); b.className='opt'+(mockState.answers[mockState.idx]===i?' correct':'');
+    if(mockState.answers[mockState.idx]===i){ b.classList.remove('correct'); b.style.background='rgba(212,167,44,.18)'; b.style.borderColor='var(--gold-500)'; }
+    b.textContent=t; b.onclick=()=>{ mockState.answers[mockState.idx]=i; renderMockQuestion(); };
+    opts.appendChild(b);
+  });
+}
+function mockNext(){ if(mockState.idx<mockState.questions.length-1){mockState.idx++; renderMockQuestion();} }
+function mockPrev(){ if(mockState.idx>0){mockState.idx--; renderMockQuestion();} }
+function submitMock(){
+  clearInterval(mockTimerInt);
+  let correct=0,wrong=0,skipped=0;
+  mockState.questions.forEach((q,i)=>{ const a=mockState.answers[i]; if(a===null) skipped++; else if(a===q.correct) correct++; else wrong++; });
+  const total=mockState.questions.length; const raw=correct-(wrong*mockState.neg);
+  const pct= total? Math.max(0,Math.round((raw/total)*100)):0;
+  if(!state.mockHistory[state.track]) state.mockHistory[state.track]=[];
+  state.mockHistory[state.track].unshift({date:new Date().toLocaleDateString('hi-IN'), total, correct, wrong, skipped, pct});
+  state.mockHistory[state.track]=state.mockHistory[state.track].slice(0,20);
+  save(); touchStreak();
+  document.getElementById('resultRing').style.setProperty('--pct',pct);
+  document.getElementById('resultPct').textContent=pct+'%';
+  document.getElementById('resAttempted').textContent=(correct+wrong);
+  document.getElementById('resCorrect').textContent=correct;
+  document.getElementById('resWrong').textContent=wrong;
+  document.getElementById('resSkipped').textContent=skipped;
+  const rev=document.getElementById('resReview'); rev.innerHTML='';
+  mockState.questions.forEach((q,i)=>{
+    const a=mockState.answers[i];
+    const div=document.createElement('div'); div.style.cssText='padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:12.5px;';
+    const status=a===null?'⬜ छूटा':(a===q.correct?'✅ सही':'❌ गलत');
+    div.innerHTML=`<div style="margin-bottom:4px;">${i+1}. [${q.cat}] ${q.text}</div><div style="color:var(--muted);">${status} — सही उत्तर: ${q.opts[q.correct]}</div>`;
+    rev.appendChild(div);
+  });
+  goTo('mockresult');
+}
+function renderMockHistory(){
+  const el=document.getElementById('mockHistory'); const hist=state.mockHistory[state.track]||[];
+  if(!hist.length){ el.className='empty'; el.textContent='अभी तक कोई मॉक टेस्ट नहीं दिया।'; return; }
+  el.className=''; el.innerHTML='';
+  hist.forEach(h=>{ const d=document.createElement('div'); d.style.cssText='display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;';
+    d.innerHTML=`<span>${h.date} • ${h.total} प्रश्न</span><b style="color:var(--gold-300);">${h.pct}%</b>`; el.appendChild(d); });
+}
+
+/* ================= PLANNER ================= */
+function generatePlan(){
+  const dur=parseInt(document.getElementById('planDuration').value);
+  const hours=document.getElementById('planHours').value;
+  const days=[]; const start=new Date(); const rotation=['A','B','C'];
+  for(let i=0;i<dur;i++){
+    const d=new Date(start); d.setDate(d.getDate()+i);
+    const cat=rotation[i%3]; const isRevision=(i+1)%7===0; const isMock=(i+1)%10===0;
+    let task;
+    if(isMock) task={label:'🎯 फुल मॉक टेस्ट दें + विश्लेषण करें'};
+    else if(isRevision) task={label:'🔁 सप्ताह की रिवीज़न + कमज़ोर टॉपिक दोहराएँ'};
+    else task={label:`${CATS[cat].icon} भाग ${cat} अभ्यास (${hours} घंटे) + 15 मिनट फिजिकल`};
+    days.push({date:d.toLocaleDateString('hi-IN',{day:'2-digit',month:'short'}), task});
+  }
+  state.plan={createdAt:Date.now(), track:state.track, days}; state.planDone={}; save(); renderPlanner();
+}
+function resetPlanConfirm(){ if(confirm('मौजूदा प्लान हटाकर नया बनाएं?')){ state.plan=null; state.planDone={}; save(); renderPlanner(); } }
+function renderPlanner(){
+  const setup=document.getElementById('plannerSetup'), progCard=document.getElementById('planProgressCard'), daysEl=document.getElementById('plannerDays');
+  if(!state.plan || state.plan.track!==state.track){ setup.style.display='block'; progCard.style.display='none'; daysEl.innerHTML=''; return; }
+  setup.style.display='none'; progCard.style.display='block';
+  const total=state.plan.days.length, done=Object.values(state.planDone).filter(Boolean).length, pct=total?Math.round(done/total*100):0;
+  document.getElementById('planPctText').textContent=pct+'%'; document.getElementById('planPctBar').style.width=pct+'%';
+  daysEl.innerHTML='';
+  state.plan.days.forEach((d,i)=>{
+    const div=document.createElement('div'); div.className='planner-day'+(state.planDone[i]?' done':'');
+    div.innerHTML=`<input type="checkbox" ${state.planDone[i]?'checked':''} onchange="togglePlanDay(${i})"><div><div class="d-title">दिन ${i+1} • ${d.date}</div><div class="d-sub">${d.task.label}</div></div>`;
+    daysEl.appendChild(div);
+  });
+}
+function togglePlanDay(i){ state.planDone[i]=!state.planDone[i]; save(); touchStreak(); renderPlanner(); }
+
+/* ================= NOTES (ABC factline) ================= */
+function renderNotes(){
+  const el=document.getElementById('notesContent');
+  el.innerHTML = `
+  <h3>🌐 भाग A — सामान्य ज्ञान एवं तार्किक ज्ञान</h3>
+  <table>
+    <tr><td>संविधान अपनाया/लागू</td><td>26 नवंबर 1949 / 26 जनवरी 1950</td></tr>
+    <tr><td>मौलिक अधिकार</td><td>भाग-3, अनुच्छेद 12-35 (वर्तमान में 6)</td></tr>
+    <tr><td>मौलिक कर्तव्य</td><td>भाग IV-A, अनुच्छेद 51-क, कुल 11</td></tr>
+    <tr><td>पंचायती राज / नगरपालिका</td><td>73वां / 74वां संशोधन (1992)</td></tr>
+    <tr><td>राष्ट्रीय पशु/पक्षी/पुष्प</td><td>बाघ / मोर / कमल</td></tr>
+    <tr><td>राष्ट्रीय ध्वज अनुपात</td><td>3:2</td></tr>
+    <tr><td>MP स्थापना दिवस</td><td>1 नवंबर 1956, राजधानी भोपाल</td></tr>
+    <tr><td>MP उच्च न्यायालय</td><td>जबलपुर (खंडपीठ इंदौर, ग्वालियर)</td></tr>
+    <tr><td>MP संभाग / जिले</td><td>10 संभाग, ~55 जिले</td></tr>
+    <tr><td>MP राज्य पशु/पक्षी</td><td>बारहसिंगा / दूधराज</td></tr>
+    <tr><td>प्रमुख टाइगर रिज़र्व</td><td>कान्हा, बांधवगढ़ (उमरिया), पेंच, सतपुड़ा, पन्ना</td></tr>
+  </table>
+  <div class="qa">🏷️ हरित क्रांति के जनक — <b>एम.एस. स्वामीनाथन</b><span class="src">MPESB Group-4 CRT-2024, 08 मई 2025</span></div>
+  <div class="qa">🏷️ सरकारिया आयोग की स्थापना वर्ष — <b>1983</b><span class="src">MPESB Group-4 CRT-2024, 08 मई 2025</span></div>
+  <div class="qa">🏷️ वधावन बंदरगाह किस राज्य में — <b>महाराष्ट्र</b><span class="src">MPESB Group-4 CRT-2024, 08 मई 2025</span></div>
+  <div class="qa">🏷️ ताप्ती नदी — कर्क रेखा को <b>दो बार</b> पार करती है<span class="src">MPESB Group-4 CRT-2024, 08 मई 2025</span></div>
+
+  <h3>🧩 भाग B — बौद्धिक क्षमता एवं मानसिक अभिरुचि</h3>
+  <ul>
+    <li>कोडिंग-डिकोडिंग: हर अक्षर को उसके स्थान-संख्या (A=1...Z=26) से जोड़कर हल करें।</li>
+    <li>दिशा ज्ञान: उत्तर से दायें 90°=पूर्व; दो बार 90° दायें घुमाव = विपरीत दिशा।</li>
+    <li>रक्त संबंध: माँ का भाई=मामा, पिता का भाई=चाचा, पिता की बहन=बुआ, माँ की बहन=मौसी।</li>
+    <li>कैलेंडर: तारीखों का अंतर 7 से भाग देकर शेष निकालें; लीप वर्ष = 4 से पूर्णतः विभाज्य (शताब्दी वर्ष हेतु 400 से विभाज्य)।</li>
+    <li>औसत = सभी संख्याओं का योग ÷ संख्याओं की गिनती।</li>
+  </ul>
+  <div class="qa">🏷️ 11, 22, 33, 44 में विषम — <b>11</b> (यह अकेला अभाज्य है)<span class="src">MPESB PRT Subedar & SI, 16 जनवरी 2026</span></div>
+  <div class="qa">🏷️ लीप वर्ष गणना: 1991→1992 में बुधवार+2 दिन = <b>शुक्रवार</b><span class="src">MPESB PRT Subedar & SI, 16 जनवरी 2026</span></div>
+  <div class="qa">🏷️ दिशा-दूरी प्रश्न में O और N के बीच दूरी — <b>700 मी</b> (उत्तर+दक्षिण दूरी जोड़ें)<span class="src">MPESB PRT Subedar & SI, 16 जनवरी 2026</span></div>
+
+  <h3>🔬 भाग C — विज्ञान एवं सरल अंकगणित</h3>
+  <table>
+    <tr><td>सबसे बड़ा अंग / ग्रंथि</td><td>त्वचा / यकृत</td></tr>
+    <tr><td>हृदय के कक्ष</td><td>4 (2 अलिंद+2 निलय)</td></tr>
+    <tr><td>हड्डियाँ (वयस्क)</td><td>206</td></tr>
+    <tr><td>जाइलम / फ्लोएम</td><td>जल का परिवहन / भोजन का परिवहन</td></tr>
+    <tr><td>विटामिन C की कमी</td><td>स्कर्वी</td></tr>
+    <tr><td>pH 7</td><td>उदासीन</td></tr>
+  </table>
+  <ul>
+    <li>प्रतिशत = (भाग/कुल)×100; लाभ% = (लाभ/क्रय मूल्य)×100</li>
+    <li>साधारण ब्याज (SI) = (मूलधन×दर×समय)/100</li>
+    <li>दूरी = चाल×समय; किमी/घंटा→मी/से: ×5/18</li>
+    <li>त्रिभुज क्षेत्रफल = ½×आधार×ऊँचाई; कोणों का योग=180°</li>
+  </ul>
+  <div class="qa">🏷️ झुके तल पर सबसे पहले पहुँचता है — <b>ठोस सिलेंडर</b> (न्यूनतम जड़त्व आघूर्ण)<span class="src">MPESB PRT Subedar & SI, 16 जनवरी 2026</span></div>
+  <div class="qa">🏷️ अवतल दर्पण में C-F के बीच वस्तु का प्रतिबिंब — <b>वास्तविक, बड़ा, C से परे</b><span class="src">MPESB PRT Subedar & SI, 16 जनवरी 2026</span></div>
+  <div class="qa">🏷️ रदरफोर्ड प्रयोग में बड़े कोण विक्षेपण — <b>धनावेशित नाभिक द्वारा प्रतिकर्षण</b><span class="src">MPESB PRT Subedar & SI, 16 जनवरी 2026</span></div>
+  <div class="qa">🏷️ ₹12000 पर 2 वर्ष CI से ₹14400 → दर ≈ <b>9.5%</b><span class="src">MPESB Group-4 CRT-2024, 08 मई 2025</span></div>
+  <p style="font-size:11px;color:var(--muted);margin-top:14px;">© Personal Use Only — MPESB के आधिकारिक पुराने प्रश्नपत्रों (Group-4 CRT-2024 व PRT Subedar-SI 2026) से सत्यापित तथ्यों पर आधारित। पूर्ण प्रश्न-बैंक हेतु ऐप के Practice/Mock सेक्शन देखें।</p>
+  `;
+}
+
+/* ================= PROGRESS + PFT ================= */
+function renderProgress(){
+  const el=document.getElementById('subjectAccuracy'); el.innerHTML='';
+  ['A','B','C'].forEach(cat=>{
+    const c=CATS[cat]; const att=state.attempts[cat]||0, cor=state.correct[cat]||0, acc=att?Math.round(cor/att*100):0;
+    const row=document.createElement('div'); row.style.marginBottom='12px';
+    row.innerHTML=`<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;"><span>${c.icon} भाग ${cat}</span><b>${acc}% (${cor}/${att})</b></div><div class="progress-bar"><div style="width:${acc}%"></div></div>`;
+    el.appendChild(row);
+  });
+  renderPhysical();
+}
+function renderPhysical(){
+  const el=document.getElementById('physicalList'); el.innerHTML='';
+  if(!state.physical.length){
+    state.physical=[ {label:'800 मीटर दौड़ — साप्ताहिक टाइमिंग सुधार', done:false}, {label:'लंबी कूद अभ्यास — सप्ताह में 3 दिन', done:false}, {label:'गोला फेंक तकनीक अभ्यास', done:false}, {label:'स्टैमिना बिल्डिंग — रोज़ 20 मिनट जॉगिंग', done:false} ];
+    save();
+  }
+  state.physical.forEach((p,i)=>{ const div=document.createElement('div'); div.className='planner-day'+(p.done?' done':'');
+    div.innerHTML=`<input type="checkbox" ${p.done?'checked':''} onchange="togglePhysical(${i})"><div><div class="d-title">${p.label}</div></div>`; el.appendChild(div); });
+}
+function togglePhysical(i){ state.physical[i].done=!state.physical[i].done; save(); renderPhysical(); }
+function addPhysical(){ const label=prompt('नया फिजिकल लक्ष्य लिखें:'); if(label&&label.trim()){ state.physical.push({label:label.trim(),done:false}); save(); renderPhysical(); } }
+
+// PFT — official PCRT rulebook general-norms tables (approximate linear model)
+function calcPFT(){
+  const gender=document.getElementById('pftGender').value;
+  const dash=parseFloat(document.getElementById('pftDash').value);
+  const jump=parseFloat(document.getElementById('pftJump').value);
+  const shot=parseFloat(document.getElementById('pftShot').value);
+  if(isNaN(dash)||isNaN(jump)||isNaN(shot)){ alert('कृपया तीनों मान भरें।'); return; }
+  let dScore,jScore,sScore;
+  if(gender==='m'){
+    dScore = Math.round((198.3-dash)/1.9);
+    jScore = Math.round((jump-2.96)/0.09);
+    sScore = Math.round((shot-3.83)/0.17);
+  } else {
+    dScore = Math.round((261.8-dash)/2.2);
+    jScore = Math.round((jump-2.04)/0.08);
+    sScore = Math.round((shot-2.85)/0.15);
+  }
+  dScore=Math.max(0,Math.min(40,dScore));
+  jScore=Math.max(0,Math.min(30,jScore));
+  sScore=Math.max(0,Math.min(30,sScore));
+  const total=dScore+jScore+sScore;
+  document.getElementById('pftResultBox').style.display='block';
+  document.getElementById('pftTotal').textContent=total;
+  document.getElementById('pftDashScore').textContent=dScore;
+  document.getElementById('pftJumpScore').textContent=jScore;
+  document.getElementById('pftShotScore').textContent=sScore;
+  const v=document.getElementById('pftVerdict');
+  if(total>=30) v.textContent='✅ यह अनुमानित स्कोर न्यूनतम उत्तीर्ण अंक (30) से ऊपर है। (यह अनुमानित गणना है — आधिकारिक तालिका से थोड़ा भिन्न हो सकता है)';
+  else v.textContent='⚠️ यह अनुमानित स्कोर न्यूनतम 30 अंक से कम है — अभी अभ्यास और बढ़ाएं। (यह अनुमानित गणना है)';
+}
+
+function resetAll(){ state=defaultState(); save(); goTo('home'); }
+
+renderHome();
+</script>
+</body>
+</html>
